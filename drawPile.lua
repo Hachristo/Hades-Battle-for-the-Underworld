@@ -10,7 +10,7 @@ function DrawPileClass:new(xPos, yPos, cards, deck, hand, discard)
   setmetatable(drawPile, metadata)
   
   drawPile.position = Vector(xPos, yPos)
-  drawPile.size = Vector(50, 70)
+  drawPile.size = Vector(142, 200)
   drawPile.cards = cards
   drawPile.deck = deck
   drawPile.hand = hand
@@ -26,7 +26,7 @@ end
 
 function DrawPileClass:draw()
   love.graphics.setColor(1, 1, 1, 1)
-  love.graphics.draw(self.sprite, self.position.x, self.position.y, 0, 1, 1)
+  love.graphics.draw(self.sprite, self.position.x, self.position.y, 0, 3.45, 3.45)
 end
 
 function DrawPileClass:update()

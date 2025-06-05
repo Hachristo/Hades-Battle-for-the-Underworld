@@ -89,7 +89,7 @@ function CardClass:draw()
     love.graphics.setColor(1, 1, 1, 1)
 
   else
-    love.graphics.draw(self.back, self.position.x, self.position.y, 0, self.scale, self.scale)
+    love.graphics.draw(self.back, self.position.x, self.position.y, 0, 3.45, 3.45)
   end
   
 end

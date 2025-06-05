@@ -7,16 +7,18 @@ require "drawPile"
 require "deck"
 
 seed = os.time()
+seedAI = seed + 1
 
 playerMana = 0
 
 function love.load()
-  loadGame(seed)
+  loadGame(seed, seedAI)
 end
 
 function love.update()
   grabber:update()
-  drawPile:update()
+  drawPilePlayer:update()
+  drawPileAI:update()
   
   checkForMouseMoving()  
   
@@ -43,7 +45,8 @@ function love.update()
 end
 
 function love.draw()
-  drawPile:draw()
+  drawPilePlayer:draw()
+  drawPileAI:draw()
   for _, card in ipairs(cardTable) do
     card:draw() --card.draw(card)
   end
@@ -75,19 +78,24 @@ function gameSetup()
   local cardNum = 1
   for i = 1, 3 do
     local faceUp = true
-    table.insert(cardTable, CardClass:new(0, 0, deck:removeTopCard(), faceUp, faceUp))
+    table.insert(cardTable, CardClass:new(0, 0, deckPlayer:removeTopCard(), faceUp, faceUp))
     pileTable[5]:addCard(cardTable[cardNum])
+    cardNum = cardNum + 1
+    faceUp = false
+    table.insert(cardTable, CardClass:new(0, 0, deckAI:removeTopCard(), faceUp, faceUp))
+    pileTable[10]:addCard(cardTable[cardNum])
     cardNum = cardNum + 1
   end
 end
 
 function resetGame()
-  loadGame(seed)
+  loadGame(seed, seedAI)
 end
 
 function restartGame()
   seed = os.time()
-  loadGame(seed)
+  seedAI = seed + 1
+  loadGame(seed, seedAI)
 end
 
 function winSetup()
@@ -97,7 +105,7 @@ function winSetup()
   pileTable[11]:addCard(CardClass:new(0, 0, "card_diamonds_13.png"))
 end
 
-function loadGame(seed)
+function loadGame(seed, seedAI)
   love.window.setMode(1920, 1080)
   love.graphics.setBackgroundColor(0, 0.37, 0.58, 1)
   
@@ -106,29 +114,32 @@ function loadGame(seed)
   pileTable = {}
   won = false
   
-  table.insert(pileTable, PileClass:new(225, 550, 250, 70, 1))
-  table.insert(pileTable, PileClass:new(825, 550, 250, 70, 1))
-  table.insert(pileTable, PileClass:new(1425, 550, 250, 70, 1))
+  table.insert(pileTable, PileClass:new(125, 550, 450, 70, 1))
+  table.insert(pileTable, PileClass:new(725, 550, 450, 70, 1))
+  table.insert(pileTable, PileClass:new(1325, 550, 450, 70, 1))
   
-  table.insert(pileTable, PileClass:new(225, 900, 50, 70, 3))
+  table.insert(pileTable, PileClass:new(125, 850, 150, 70, 3))
   
   table.insert(pileTable, PileClass:new(430, 850, 1000, 70, 2))
   
---  table.insert(pileTable, PileClass:new(400, 300, 1))
---  table.insert(pileTable, PileClass:new(500, 300, 1))
---  table.insert(pileTable, PileClass:new(600, 300, 1))
---  table.insert(pileTable, PileClass:new(700, 300, 1))
+  deckPlayer = DeckClass:new(pileTable[4], seed)
+  deckPlayer:fillDeck()
   
---  table.insert(pileTable, PileClass:new(400, 100, 0))
---  table.insert(pileTable, PileClass:new(500, 100, 0))
---  table.insert(pileTable, PileClass:new(600, 100, 0))
---  table.insert(pileTable, PileClass:new(700, 100, 0))
+  drawPilePlayer = DrawPileClass:new(1600, 850, cardTable, deckPlayer, pileTable[5], pileTable[4])
+  
+  table.insert(pileTable, PileClass:new(125, 350, 450, 70, 1))
+  table.insert(pileTable, PileClass:new(725, 350, 450, 70, 1))
+  table.insert(pileTable, PileClass:new(1325, 350, 450, 70, 1))
+  
+  table.insert(pileTable, PileClass:new(125, 50, 150, 70, 3))
+  
+  table.insert(pileTable, PileClass:new(430, 50, 1000, 70, 2))
   
   
-  deck = DeckClass:new(pileTable[4], seed)
-  deck:fillDeck()
+  deckAI = DeckClass:new(pileTable[9], seedAI)
+  deckAI:fillDeck()
   
-  drawPile = DrawPileClass:new(1600, 900, cardTable, deck, pileTable[5], pileTable[4])
+  drawPileAI = DrawPileClass:new(1600, 50, cardTable, deckAI, pileTable[10], pileTable[9])
   
   gameSetup()
   --winSetup()
