@@ -8,6 +8,8 @@ require "deck"
 
 seed = os.time()
 
+playerMana = 0
+
 function love.load()
   loadGame(seed)
 end
@@ -37,6 +39,7 @@ function love.update()
   if love.keyboard.isDown("y") then
     restartGame()
   end
+  playerMana = 1 - (pileTable[1].mana + pileTable[2].mana + pileTable[3].mana)
 end
 
 function love.draw()
@@ -54,6 +57,7 @@ function love.draw()
   love.graphics.print("Press R to reset (same seed)",0,0)
   love.graphics.print("Press Y to restart (new seed)",0,15)
   love.graphics.print("Hades: Battle for the Underworld", 750, 10, 0, 2, 2)
+  love.graphics.print("Mana: " .. playerMana, 10, 500)
   
 end
 

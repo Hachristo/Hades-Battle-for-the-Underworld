@@ -12,6 +12,8 @@ function PileClass:new(xPos, yPos, xSize, ySize, tableau)
   pile.size = Vector(xSize, ySize)
   pile.cards = {}
   
+  pile.mana = 0
+  
   pile.type = tableau
   pile.complete = false
   
@@ -35,10 +37,13 @@ function PileClass:draw()
 end
 
 function PileClass:tableauUpdate()
+  local pileMana = 0
   for i, iCard in ipairs(self.cards) do
     iCard.side = true
     iCard.draggable = true
+    pileMana = pileMana + iCard.cost
   end
+  self.mana = pileMana
 end
 
 function PileClass:discardUpdate()
