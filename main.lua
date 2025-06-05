@@ -10,6 +10,14 @@ seed = os.time()
 seedAI = seed + 1
 
 playerMana = 0
+playerPoints = 0
+
+AIMana = 0
+AIPoints = 0
+
+turn = 1
+
+submitBuffer = true
 
 function love.load()
   loadGame(seed, seedAI)
@@ -41,7 +49,15 @@ function love.update()
   if love.keyboard.isDown("y") then
     restartGame()
   end
-  playerMana = 1 - (pileTable[1].mana + pileTable[2].mana + pileTable[3].mana)
+  if love.keyboard.isDown("s") and submitBuffer then
+    submitBuffer = false
+    submitMove()
+  end
+  if not love.keyboard.isDown("s") then
+    submitBuffer = true
+  end
+  playerMana = turn - (pileTable[1].mana + pileTable[2].mana + pileTable[3].mana)
+  AIMana = turn - (pileTable[6].mana + pileTable[7].mana + pileTable[8].mana)
 end
 
 function love.draw()
@@ -59,8 +75,14 @@ function love.draw()
   end
   love.graphics.print("Press R to reset (same seed)",0,0)
   love.graphics.print("Press Y to restart (new seed)",0,15)
+  love.graphics.print("Press S to submit turn",0,30)
   love.graphics.print("Hades: Battle for the Underworld", 750, 10, 0, 2, 2)
-  love.graphics.print("Mana: " .. playerMana, 10, 500)
+  -- Player
+  love.graphics.print("Mana: " .. playerMana, 1750, 850)
+  love.graphics.print("Points: " .. playerPoints, 1750, 865)
+  -- AI
+  love.graphics.print("Mana: " .. AIMana, 1750, 50)
+  love.graphics.print("Points: " .. AIPoints, 1750, 65)
   
 end
 
@@ -143,4 +165,18 @@ function loadGame(seed, seedAI)
   
   gameSetup()
   --winSetup()
+end
+function submitMove()
+  comparePiles(pileTable[1], pileTable[6])
+  comparePiles(pileTable[2], pileTable[7])
+  comparePiles(pileTable[3], pileTable[8])
+  turn = turn + 1
+end
+
+function comparePiles(pilePlayer, pileAI)
+  if pilePlayer.power > pileAI.power then
+    playerPoints = playerPoints + (pilePlayer.power - pileAI.power)
+  else
+    AIPoints = AIPoints + (pileAI.power - pilePlayer.power)
+  end
 end

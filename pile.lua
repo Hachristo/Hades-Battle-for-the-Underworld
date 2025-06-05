@@ -13,6 +13,7 @@ function PileClass:new(xPos, yPos, xSize, ySize, tableau)
   pile.cards = {}
   
   pile.mana = 0
+  pile.power = 0
   
   pile.type = tableau
   pile.complete = false
@@ -38,12 +39,15 @@ end
 
 function PileClass:tableauUpdate()
   local pileMana = 0
+  local pilePower = 0
   for i, iCard in ipairs(self.cards) do
     iCard.side = true
     iCard.draggable = true
     pileMana = pileMana + iCard.cost
+    pilePower = pilePower + iCard.power
   end
   self.mana = pileMana
+  self.power = pilePower
 end
 
 function PileClass:discardUpdate()
