@@ -55,24 +55,13 @@ function DrawPileClass:checkForMouseOver()
 end
 
 function DrawPileClass:drawCards()
-  local handCards = self.hand:getPileCards()
-  local loops = 1
-  if loops == 0 then
-    self.deck:refillDeck()
-    self.refill = true
+  if self.discard == pileTable[4] then
+    local cardString = self.deck:removeTopCard()
+    local card = stringFunction[cardString](0, 0, cardString, true, true, PLAYER)
   else
-    if self.refill then
-      for i = 1, loops do
-        local card1 = CardClass:new(250, 135, self.deck:removeTopCard(), true, true)
-        table.insert(self.cards, card1)
-        self.hand:addCard(card1)
-      end
-    else
-      for i = 1, loops do
-        local card1 = CardClass:new(250, 135, self.deck:removeTopCard(), true, true)
-        table.insert(self.cards, card1)
-        self.hand:addCard(card1)
-      end
-    end
+    local cardString = self.deck:removeTopCard()
+    local card = stringFunction[cardString](0, 0, cardString, true, true, AI)
   end
+  table.insert(self.cards, card)
+  self.hand:addCard(card)
 end

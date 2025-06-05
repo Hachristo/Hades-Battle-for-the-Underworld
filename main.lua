@@ -19,6 +19,45 @@ turn = 1
 
 submitBuffer = true
 
+ENTITIES = {
+  PLAYER = 1,
+  AI = 2
+}
+
+cardConstructors = {
+  cardWoodenCow = WoodenCowPrototype.new,
+  cardPegasus = PegasusPrototype.new,
+  cardMinotaur = MinotaurPrototype.new,
+  cardTitan = TitanPrototype.new,
+  cardZeus = ZeusPrototype.new,
+  cardAres = AresPrototype.new,
+  cardPoseidon = PoseidonPrototype.new,
+  cardArtemis = ArtemisPrototype.new,
+  cardDemeter = DemeterPrototype.new,
+  cardHades = HadesPrototype.new,
+  cardDionysus = DionysusPrototype.new,
+  cardHermes = HermesPrototype.new,
+  cardAphrodite = AphroditePrototype.new,
+  cardApollo = ApolloPrototype.new
+}
+
+stringFunction = {
+  ["Wooden Cow.png"] = cardConstructors.cardWoodenCow,
+  ["Pegasus.png"] = cardConstructors.cardPegasus,
+  ["Minotaur.png"] = cardConstructors.cardMinotaur,
+  ["Titan.png"] = cardConstructors.cardTitan,
+  ["Zeus.png"] = cardConstructors.cardZeus,
+  ["Ares.png"] = cardConstructors.cardAres,
+  ["Poseidon.png"] = cardConstructors.cardPoseidon,
+  ["Artemis.png"] = cardConstructors.cardArtemis,
+  ["Demeter.png"] = cardConstructors.cardDemeter,
+  ["Hades.png"] = cardConstructors.cardHades,
+  ["Dionysus.png"] = cardConstructors.cardDionysus,
+  ["Hermes.png"] = cardConstructors.cardHermes,
+  ["Aphrodite.png"] = cardConstructors.cardAphrodite,
+  ["Apollo.png"] = cardConstructors.cardApollo
+}
+
 function love.load()
   loadGame(seed, seedAI)
 end
@@ -100,11 +139,15 @@ function gameSetup()
   local cardNum = 1
   for i = 1, 3 do
     local faceUp = true
-    table.insert(cardTable, CardClass:new(0, 0, deckPlayer:removeTopCard(), faceUp, faceUp))
+    local cardString = deckPlayer:removeTopCard()
+    print(cardString)
+    table.insert(cardTable, stringFunction[cardString](self, 0, 0, cardString, faceUp, faceUp, PLAYER))
     pileTable[5]:addCard(cardTable[cardNum])
     cardNum = cardNum + 1
     faceUp = false
-    table.insert(cardTable, CardClass:new(0, 0, deckAI:removeTopCard(), faceUp, faceUp))
+    cardString = deckPlayer:removeTopCard()
+    print(cardString)
+    table.insert(cardTable, stringFunction[cardString](self, 0, 0, cardString, faceUp, faceUp, AI))
     pileTable[10]:addCard(cardTable[cardNum])
     cardNum = cardNum + 1
   end
@@ -120,12 +163,12 @@ function restartGame()
   loadGame(seed, seedAI)
 end
 
-function winSetup()
-  pileTable[8]:addCard(CardClass:new(0, 0, "card_spades_13.png"))
-  pileTable[9]:addCard(CardClass:new(0, 0, "card_clubs_13.png"))
-  pileTable[10]:addCard(CardClass:new(0, 0, "card_hearts_13.png"))
-  pileTable[11]:addCard(CardClass:new(0, 0, "card_diamonds_13.png"))
-end
+--function winSetup()
+--  pileTable[8]:addCard(CardClass:new(0, 0, "card_spades_13.png"))
+--  pileTable[9]:addCard(CardClass:new(0, 0, "card_clubs_13.png"))
+--  pileTable[10]:addCard(CardClass:new(0, 0, "card_hearts_13.png"))
+--  pileTable[11]:addCard(CardClass:new(0, 0, "card_diamonds_13.png"))
+--end
 
 function loadGame(seed, seedAI)
   love.window.setMode(1920, 1080)
@@ -175,6 +218,10 @@ end
 
 function comparePiles(pilePlayer, pileAI)
   if pilePlayer.power > pileAI.power then
+    for _, card in ipairs(pilePlayer.cards) do
+      print(card.name)
+      card:onReveal()
+    end
     playerPoints = playerPoints + (pilePlayer.power - pileAI.power)
   else
     AIPoints = AIPoints + (pileAI.power - pilePlayer.power)

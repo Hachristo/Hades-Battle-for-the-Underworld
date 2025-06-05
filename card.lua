@@ -46,7 +46,7 @@ Power = {
   ["Zeus.png"] = 9
 }
 
-function CardClass:new(xPos, yPos, sprite, draggable, faceUp)
+function CardClass:new(xPos, yPos, sprite, draggable, faceUp, player)
   local card = {}
   local metadata = {__index = CardClass}
   setmetatable(card, metadata)
@@ -61,6 +61,7 @@ function CardClass:new(xPos, yPos, sprite, draggable, faceUp)
   card.name = sprite
   card.cost = Cost[sprite]
   card.power = Power[sprite]
+  card.player = player
   
   card.image = love.graphics.newImage("NewSprites/" .. sprite)
   card.back = love.graphics.newImage("Sprites/card_back.png")
@@ -115,4 +116,123 @@ function CardClass:checkForMouseOver(grabber)
   end
   
   self.state = isMouseOver and CARD_STATE.MOUSE_OVER or CARD_STATE.IDLE
+end
+-- Card Subclasses
+-- Wooden Cow
+WoodenCowPrototype = CardClass:new(0, 0, "Wooden Cow.png", false, false, 0)
+function WoodenCowPrototype:new()
+  return WoodenCowPrototype
+end
+function WoodenCowPrototype:onReveal()
+  
+end
+-- Pegasus
+PegasusPrototype = CardClass:new(0, 0, "Pegasus.png", false, false, 0)
+function PegasusPrototype:new()
+  return PegasusPrototype
+end
+function PegasusPrototype:onReveal()
+  
+end
+-- Minotaur
+MinotaurPrototype = CardClass:new(0, 0, "Minotaur.png", false, false, 0)
+function MinotaurPrototype:new()
+  return MinotaurPrototype
+end
+function MinotaurPrototype:onReveal()
+  
+end
+-- Titan
+TitanPrototype = CardClass:new(0, 0, "Titan.png", false, false, 0)
+function TitanPrototype:new()
+  return TitanPrototype
+end
+function TitanPrototype:onReveal()
+  
+end
+-- Zeus
+ZeusPrototype = CardClass:new(0, 0, "Zeus.png", false, false, 0)
+function ZeusPrototype:new()
+  return ZeusPrototype
+end
+function ZeusPrototype:onReveal()
+  local enemyHand = pileTable[10]
+  if self.player == AI then
+    enemyHand = pileTable[5]
+  end
+  for _, card in ipairs(enemyHand.cards) do
+    card.power = card.power - 1
+  end
+end
+-- Ares
+AresPrototype = CardClass:new(0, 0, "Ares.png", false, false, 0)
+function AresPrototype:new()
+  return AresPrototype
+end
+function AresPrototype:onReveal()
+  
+end
+-- Poseidon
+PoseidonPrototype = CardClass:new(0, 0, "Poseidon.png", false, false, 0)
+function PoseidonPrototype:new()
+  return PoseidonPrototype
+end
+function PoseidonPrototype:onReveal()
+  
+end
+-- Artemis
+ArtemisPrototype = CardClass:new(0, 0, "Artemis.png", false, false, 0)
+function ArtemisPrototype:new()
+  return ArtemisPrototype
+end
+function ArtemisPrototype:onReveal()
+  
+end
+-- Demeter
+DemeterPrototype = CardClass:new(0, 0, "Demeter.png", false, false, 0)
+function DemeterPrototype:new()
+  return DemeterPrototype
+end
+function DemeterPrototype:onReveal()
+  
+end
+-- Hades
+HadesPrototype = CardClass:new(0, 0, "Hades.png", false, false, 0)
+function HadesPrototype:new()
+  return HadesPrototype
+end
+function HadesPrototype:onReveal()
+  
+end
+-- Dionysus
+DionysusPrototype = CardClass:new(0, 0, "Dionysus.png", false, false, 0)
+function DionysusPrototype:new()
+  return DionysusPrototype
+end
+function DionysusPrototype:onReveal()
+  
+end
+-- Hermes
+HermesPrototype = CardClass:new(0, 0, "Hermes.png", false, false, 0)
+function HermesPrototype:new()
+  return HermesPrototype
+end
+function HermesPrototype:onReveal()
+  
+end
+-- Aphrodite
+AphroditePrototype = CardClass:new(0, 0, "Aphrodite.png", false, false, 0)
+function AphroditePrototype:new()
+  return AphroditePrototype
+end
+function AphroditePrototype:onReveal()
+  
+end
+-- Apollo
+ApolloPrototype = CardClass:new(0, 0, "Apollo.png", false, false, 0)
+function ApolloPrototype:new()
+  return ApolloPrototype
+end
+function ApolloPrototype:onReveal()
+  
 end
