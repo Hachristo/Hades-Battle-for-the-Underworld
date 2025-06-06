@@ -11,7 +11,9 @@ more easily
 
 **Postmortem**  
 Implementing the subclass sandbox introduced a bug where creating duplicate cards would overwrite existing cards of the same type in the table of cards kept
-in main
+in main. It took the better part of a day to figure out how to resolve this; the solution ended up being to change the new() function in each of the subclasses
+to return a new instance of CardClass with the __index metamethod of the subclasses being set to subclass prototype, in order to have a new card of the prototype
+each time it was called in addition to being able to call the onReveal functions unique to each subclass.
 
 **Asset List**  
 Card Back Sprite: https://kenney.nl/assets/playing-cards-pack

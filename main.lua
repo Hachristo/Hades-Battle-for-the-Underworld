@@ -10,9 +10,11 @@ seed = os.time()
 seedAI = seed + 1
 
 playerMana = 0
+playerBonusMana = 0
 playerPoints = 0
 
 AIMana = 0
+AIBonusMana = 0
 AIPoints = 0
 
 turn = 1
@@ -95,8 +97,8 @@ function love.update()
   if not love.keyboard.isDown("s") then
     submitBuffer = true
   end
-  playerMana = turn - (pileTable[1].mana + pileTable[2].mana + pileTable[3].mana)
-  AIMana = turn - (pileTable[6].mana + pileTable[7].mana + pileTable[8].mana)
+  playerMana = turn - (pileTable[1].mana + pileTable[2].mana + pileTable[3].mana) + playerBonusMana
+  AIMana = turn - (pileTable[6].mana + pileTable[7].mana + pileTable[8].mana) + AIBonusMana
 end
 
 function love.draw()
@@ -140,12 +142,12 @@ function gameSetup()
   for i = 1, 3 do
     local faceUp = true
     local cardString = deckPlayer:removeTopCard()
-    table.insert(cardTable, stringFunction[cardString](self, 0, 0, cardString, faceUp, faceUp, PLAYER))
+    table.insert(cardTable, stringFunction[cardString](self, 1))
     pileTable[5]:addCard(cardTable[cardNum])
     cardNum = cardNum + 1
     faceUp = false
     cardString = deckPlayer:removeTopCard()
-    table.insert(cardTable, stringFunction[cardString](self, 0, 0, cardString, faceUp, faceUp, AI))
+    table.insert(cardTable, stringFunction[cardString](self, 2))
     pileTable[10]:addCard(cardTable[cardNum])
     cardNum = cardNum + 1
   end
@@ -222,7 +224,9 @@ end
 function comparePiles(pilePlayer, pileAI, location)
   if pilePlayer.power >= pileAI.power then
     for _, card in ipairs(pilePlayer.cards) do
-      card:onReveal(location)
+      if not card.revealed then
+        card:onReveal(location)
+      end
     end
     playerPoints = playerPoints + (pilePlayer.power - pileAI.power)
   else
