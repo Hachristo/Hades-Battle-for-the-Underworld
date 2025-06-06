@@ -93,7 +93,6 @@ function PileClass:addCard(card)
   for i, iCard in ipairs(self.cards) do
     iCard.position.x = self.position.x + ((i-1) * 150 * spacing)
     iCard.position.y = self.position.y
-    print(iCard)
   end
 end
 

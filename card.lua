@@ -125,46 +125,57 @@ end
 -- Wooden Cow
 WoodenCowPrototype = CardClass:new(0, 0, "Wooden Cow.png", false, false, 0)
 function WoodenCowPrototype:new()
-  WoodenCowPrototype = CardClass:new(0, 0, "Wooden Cow.png", false, false, 0)
-  return WoodenCowPrototype
+  local card = CardClass:new(0, 0, "Wooden Cow.png", false, false, 0)
+  local metadata = {__index = WoodenCowPrototype}
+  setmetatable(card, metadata)
+  return card
 end
-function WoodenCowPrototype:onReveal()
+function WoodenCowPrototype:onReveal(cardLocation)
   
 end
 -- Pegasus
 PegasusPrototype = CardClass:new(0, 0, "Pegasus.png", false, false, 0)
 function PegasusPrototype:new()
-  PegasusPrototype = CardClass:new(0, 0, "Pegasus.png", false, false, 0)
-  return PegasusPrototype
+  local card = CardClass:new(0, 0, "Minotaur.png", false, false, 0)
+  local metadata = {__index = PegasusPrototype}
+  setmetatable(card, metadata)
+  return card
 end
-function PegasusPrototype:onReveal()
+function PegasusPrototype:onReveal(cardLocation)
   
 end
 -- Minotaur
 MinotaurPrototype = CardClass:new(0, 0, "Minotaur.png", false, false, 0)
 function MinotaurPrototype:new()
-  MinotaurPrototype = CardClass:new(0, 0, "Minotaur.png", false, false, 0)
-  return MinotaurPrototype
+  local card = CardClass:new(0, 0, "Minotaur.png", false, false, 0)
+  local metadata = {__index = MinotaurPrototype}
+  setmetatable(card, metadata)
+  return card
 end
-function MinotaurPrototype:onReveal()
+function MinotaurPrototype:onReveal(cardLocation)
   
 end
 -- Titan
 TitanPrototype = CardClass:new(0, 0, "Titan.png", false, false, 0)
 function TitanPrototype:new()
-  TitanPrototype = CardClass:new(0, 0, "Titan.png", false, false, 0)
-  return TitanPrototype
+  local card = CardClass:new(0, 0, "Titan.png", false, false, 0)
+  local metadata = {__index = TitanPrototype}
+  setmetatable(card, metadata)
+  return card
 end
-function TitanPrototype:onReveal()
+function TitanPrototype:onReveal(cardLocation)
   
 end
 -- Zeus
 ZeusPrototype = CardClass:new(0, 0, "Zeus.png", false, false, 0)
-function ZeusPrototype:new()
-  ZeusPrototype = CardClass:new(0, 0, "Zeus.png", false, false, 0)
-  return ZeusPrototype
+function ZeusPrototype:newCard()
+  local card = CardClass:new(0, 0, "Zeus.png", false, false, 0)
+  local metadata = {__index = ZeusPrototype}
+  setmetatable(card, metadata)
+  return card
 end
-function ZeusPrototype:onReveal()
+function ZeusPrototype:onReveal(cardLocation)
+  print("revealed")
   local enemyHand = pileTable[10]
   if self.player == AI then
     enemyHand = pileTable[5]
@@ -176,81 +187,117 @@ end
 -- Ares
 AresPrototype = CardClass:new(0, 0, "Ares.png", false, false, 0)
 function AresPrototype:new()
-  AresPrototype = CardClass:new(0, 0, "Ares.png", false, false, 0)
-  return AresPrototype
+  local card = CardClass:new(0, 0, "Ares.png", false, false, 0)
+  local metadata = {__index = AresPrototype}
+  setmetatable(card, metadata)
+  return card
 end
-function AresPrototype:onReveal()
-  
+function AresPrototype:onReveal(cardLocation)
+  if cardLocation == 1 then
+    local enemyLocation = pileTable[6]
+    if self.player == AI then
+      enemyLocation = pileTable[1]
+    end
+    self.power = self.power + #enemyLocation.cards * 2
+  elseif cardLocation == 2 then
+    local enemyLocation = pileTable[7]
+    if self.player == AI then
+      enemyLocation = pileTable[2]
+    end
+    self.power = self.power + #enemyLocation.cards * 2
+  else
+    local enemyLocation = pileTable[8]
+    if self.player == AI then
+      enemyLocation = pileTable[3]
+    end
+    self.power = self.power + #enemyLocation.cards * 2
+  end
 end
 -- Poseidon
 PoseidonPrototype = CardClass:new(0, 0, "Poseidon.png", false, false, 0)
 function PoseidonPrototype:new()
-  PoseidonPrototype = CardClass:new(0, 0, "Poseidon.png", false, false, 0)
-  return PoseidonPrototype
+  local card = CardClass:new(0, 0, "Poseidon.png", false, false, 0)
+  local metadata = {__index = PoseidonPrototype}
+  setmetatable(card, metadata)
+  return card
 end
-function PoseidonPrototype:onReveal()
+function PoseidonPrototype:onReveal(cardLocation)
   
 end
 -- Artemis
 ArtemisPrototype = CardClass:new(0, 0, "Artemis.png", false, false, 0)
 function ArtemisPrototype:new()
-  ArtemisPrototype = CardClass:new(0, 0, "Artemis.png", false, false, 0)
-  return ArtemisPrototype
+  local card = CardClass:new(0, 0, "Artemis.png", false, false, 0)
+  local metadata = {__index = ArtemisPrototype}
+  setmetatable(card, metadata)
+  return card
 end
-function ArtemisPrototype:onReveal()
+function ArtemisPrototype:onReveal(cardLocation)
   
 end
 -- Demeter
 DemeterPrototype = CardClass:new(0, 0, "Demeter.png", false, false, 0)
 function DemeterPrototype:new()
-  DemeterPrototype = CardClass:new(0, 0, "Demeter.png", false, false, 0)
-  return DemeterPrototype
+  local card = CardClass:new(0, 0, "Demeter.png", false, false, 0)
+  local metadata = {__index = DemeterPrototype}
+  setmetatable(card, metadata)
+  return card
 end
-function DemeterPrototype:onReveal()
+function DemeterPrototype:onReveal(cardLocation)
   
 end
 -- Hades
 HadesPrototype = CardClass:new(0, 0, "Hades.png", false, false, 0)
 function HadesPrototype:new()
-  HadesPrototype = CardClass:new(0, 0, "Hades.png", false, false, 0)
-  return HadesPrototype
+  local card = CardClass:new(0, 0, "Demeter.png", false, false, 0)
+  local metadata = {__index = HadesPrototype}
+  setmetatable(card, metadata)
+  return card
 end
-function HadesPrototype:onReveal()
+function HadesPrototype:onReveal(cardLocation)
   
 end
 -- Dionysus
 DionysusPrototype = CardClass:new(0, 0, "Dionysus.png", false, false, 0)
 function DionysusPrototype:new()
-  DionysusPrototype = CardClass:new(0, 0, "Dionysus.png", false, false, 0)
-  return DionysusPrototype
+  local card = CardClass:new(0, 0, "Dionysus.png", false, false, 0)
+  local metadata = {__index = DionysusPrototype}
+  setmetatable(card, metadata)
+  return card
 end
-function DionysusPrototype:onReveal()
+function DionysusPrototype:onReveal(cardLocation)
   
 end
 -- Hermes
 HermesPrototype = CardClass:new(0, 0, "Hermes.png", false, false, 0)
 function HermesPrototype:new()
-  HermesPrototype = CardClass:new(0, 0, "Hermes.png", false, false, 0)
-  return HermesPrototype
+  local card = CardClass:new(0, 0, "Hermes.png", false, false, 0)
+  local metadata = {__index = HermesPrototype}
+  setmetatable(card, metadata)
+  return card
 end
-function HermesPrototype:onReveal()
+function HermesPrototype:onReveal(cardLocation)
   
 end
 -- Aphrodite
 AphroditePrototype = CardClass:new(0, 0, "Aphrodite.png", false, false, 0)
 function AphroditePrototype:new()
-  AphroditePrototype = CardClass:new(0, 0, "Aphrodite.png", false, false, 0)
-  return AphroditePrototype
+  local card = CardClass:new(0, 0, "Aphrodite.png", false, false, 0)
+  local metadata = {__index = AphroditePrototype}
+  setmetatable(card, metadata)
+  return card
 end
-function AphroditePrototype:onReveal()
+function AphroditePrototype:onReveal(cardLocation)
   
 end
 -- Apollo
 ApolloPrototype = CardClass:new(0, 0, "Apollo.png", false, false, 0)
 function ApolloPrototype:new()
-  ApolloPrototype = CardClass:new(0, 0, "Apollo.png", false, false, 0)
-  return ApolloPrototype
+  local card = CardClass:new(0, 0, "Apollo.png", false, false, 0)
+  local metadata = {__index = ApolloPrototype}
+  setmetatable(card, metadata)
+  return card
 end
-function ApolloPrototype:onReveal()
+function ApolloPrototype:onReveal(cardLocation)
   
 end

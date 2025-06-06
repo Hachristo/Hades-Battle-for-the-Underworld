@@ -29,7 +29,7 @@ cardConstructors = {
   cardPegasus = PegasusPrototype.new,
   cardMinotaur = MinotaurPrototype.new,
   cardTitan = TitanPrototype.new,
-  cardZeus = ZeusPrototype.new,
+  cardZeus = ZeusPrototype.newCard,
   cardAres = AresPrototype.new,
   cardPoseidon = PoseidonPrototype.new,
   cardArtemis = ArtemisPrototype.new,
@@ -140,15 +140,17 @@ function gameSetup()
   for i = 1, 3 do
     local faceUp = true
     local cardString = deckPlayer:removeTopCard()
-    table.insert(cardTable, stringFunction[cardString](0, 0, cardString, faceUp, faceUp, PLAYER))
+    table.insert(cardTable, stringFunction[cardString](self, 0, 0, cardString, faceUp, faceUp, PLAYER))
     pileTable[5]:addCard(cardTable[cardNum])
     cardNum = cardNum + 1
     faceUp = false
     cardString = deckPlayer:removeTopCard()
-    table.insert(cardTable, stringFunction[cardString](0, 0, cardString, faceUp, faceUp, AI))
+    table.insert(cardTable, stringFunction[cardString](self, 0, 0, cardString, faceUp, faceUp, AI))
     pileTable[10]:addCard(cardTable[cardNum])
     cardNum = cardNum + 1
   end
+  pileTable[5]:refreshPile()
+  pileTable[10]:refreshPile()
 --  for i, _ in ipairs(cardTable) do
 --    print(cardTable[i])
 --  end
@@ -211,17 +213,17 @@ function loadGame(seed, seedAI)
   --winSetup()
 end
 function submitMove()
-  comparePiles(pileTable[1], pileTable[6])
-  comparePiles(pileTable[2], pileTable[7])
-  comparePiles(pileTable[3], pileTable[8])
+  comparePiles(pileTable[1], pileTable[6], 1)
+  comparePiles(pileTable[2], pileTable[7], 2)
+  comparePiles(pileTable[3], pileTable[8], 3)
   turn = turn + 1
 end
 
-function comparePiles(pilePlayer, pileAI)
+function comparePiles(pilePlayer, pileAI, location)
   if pilePlayer.power > pileAI.power then
     for _, card in ipairs(pilePlayer.cards) do
       print(card.name)
-      card:onReveal()
+      card:onReveal(location)
     end
     playerPoints = playerPoints + (pilePlayer.power - pileAI.power)
   else
