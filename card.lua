@@ -193,25 +193,23 @@ function AresPrototype:new()
   return card
 end
 function AresPrototype:onReveal(cardLocation)
+  local enemyLocation = pileTable[6]
   if cardLocation == 1 then
-    local enemyLocation = pileTable[6]
     if self.player == AI then
       enemyLocation = pileTable[1]
     end
-    self.power = self.power + #enemyLocation.cards * 2
   elseif cardLocation == 2 then
-    local enemyLocation = pileTable[7]
+    enemyLocation = pileTable[7]
     if self.player == AI then
       enemyLocation = pileTable[2]
     end
-    self.power = self.power + #enemyLocation.cards * 2
   else
-    local enemyLocation = pileTable[8]
+    enemyLocation = pileTable[8]
     if self.player == AI then
       enemyLocation = pileTable[3]
     end
-    self.power = self.power + #enemyLocation.cards * 2
   end
+  self.power = self.power + #enemyLocation.cards * 2
 end
 -- Poseidon
 PoseidonPrototype = CardClass:new(0, 0, "Poseidon.png", false, false, 0)
@@ -222,7 +220,39 @@ function PoseidonPrototype:new()
   return card
 end
 function PoseidonPrototype:onReveal(cardLocation)
-  
+  local enemyLocation = pileTable[6]
+  local newLocation = pileTable[7]
+  if cardLocation == 1 then
+    if self.player == AI then
+      enemycard = pileTable[1]
+      newLocation = pileTable[2]
+    end
+  elseif cardLocation == 2 then
+    enemyLocation = pileTable[7]
+    newLocation = pileTable[8]
+    if self.player == AI then
+      enemyLocation = pileTable[2]
+      newLocation = pileTable[3]
+    end
+  else
+    enemyLocation = pileTable[8]
+    newLocation = pileTable[6]
+    if self.player == AI then
+      enemyLocation = pileTable[3]
+      newLocation = pileTable[1]
+    end
+  end
+  local lowestCard = nil
+  local lowestPower = 0
+  for _, card in ipairs(enemyLocation.cards) do
+    if card.power > lowestPower then
+      lowestCard = card
+      lowestPower = card.power
+    end
+  end
+  print(lowestCard)
+  enemyLocation:removeCard(lowestCard)
+  newLocation:addCard(lowestCard)
 end
 -- Artemis
 ArtemisPrototype = CardClass:new(0, 0, "Artemis.png", false, false, 0)
@@ -233,7 +263,25 @@ function ArtemisPrototype:new()
   return card
 end
 function ArtemisPrototype:onReveal(cardLocation)
-  
+  local enemyLocation = pileTable[6]
+  if cardLocation == 1 then
+    if self.player == AI then
+      enemyLocation = pileTable[1]
+    end
+  elseif cardLocation == 2 then
+    enemyLocation = pileTable[7]
+    if self.player == AI then
+      enemyLocation = pileTable[2]
+    end
+  else
+    enemyLocation = pileTable[8]
+    if self.player == AI then
+      enemyLocation = pileTable[3]
+    end
+  end
+  if #enemyLocation.cards == 1 then
+    self.power = self.power + 5
+  end
 end
 -- Demeter
 DemeterPrototype = CardClass:new(0, 0, "Demeter.png", false, false, 0)
@@ -244,7 +292,8 @@ function DemeterPrototype:new()
   return card
 end
 function DemeterPrototype:onReveal(cardLocation)
-  
+  drawPilePlayer:drawCards()
+  drawPileAI:drawCards()
 end
 -- Hades
 HadesPrototype = CardClass:new(0, 0, "Hades.png", false, false, 0)

@@ -220,9 +220,8 @@ function submitMove()
 end
 
 function comparePiles(pilePlayer, pileAI, location)
-  if pilePlayer.power > pileAI.power then
+  if pilePlayer.power >= pileAI.power then
     for _, card in ipairs(pilePlayer.cards) do
-      print(card.name)
       card:onReveal(location)
     end
     playerPoints = playerPoints + (pilePlayer.power - pileAI.power)
