@@ -57,11 +57,18 @@ end
 function DrawPileClass:drawCards()
   local card = nil
   if self.discard == pileTable[4] then
-    local cardString = self.deck:removeTopCard()
-    card = stringFunction[cardString](self, 0, 0, cardString, true, true, PLAYER)
+    if #pileTable[4] <= 7 then
+      local cardString = self.deck:removeTopCard()
+      card = stringFunction[cardString](self, 1)
+    end
   else
-    local cardString = self.deck:removeTopCard()
-    card = stringFunction[cardString](self, 0, 0, cardString, true, true, AI)
+    if #pileTable[9] <= 7 then
+      local cardString = self.deck:removeTopCard()
+      card = stringFunction[cardString](self, 2)
+    end
+  end
+  if card == nil then
+    return
   end
   table.insert(self.cards, card)
   self.hand:addCard(card)

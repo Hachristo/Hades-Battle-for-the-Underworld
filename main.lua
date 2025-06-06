@@ -9,11 +9,11 @@ require "deck"
 seed = os.time()
 seedAI = seed + 1
 
-playerMana = 0
+playerMana = 1
 playerBonusMana = 0
 playerPoints = 0
 
-AIMana = 0
+AIMana = 1
 AIBonusMana = 0
 AIPoints = 0
 
@@ -124,6 +124,21 @@ function love.draw()
   -- AI
   love.graphics.print("Mana: " .. AIMana, 1750, 50)
   love.graphics.print("Points: " .. AIPoints, 1750, 65)
+  -- Win messages
+  if playerPoints >= 20 and AIPoints >= 20 then
+    if playerPoints > AIPoints then
+      love.graphics.print("Player Wins!", 1750, 880)
+    elseif playerPoints < AIPoints then
+      love.graphics.print("AI Wins!", 1750, 80)
+    else
+      love.graphics.print("TIE!", 1750, 880)
+      love.graphics.print("TIE!", 1750, 80)
+    end
+  elseif playerPoints >= 20 then
+    love.graphics.print("Player Wins!", 1750, 880)
+  elseif AIPoints >= 20 then
+    love.graphics.print("AI Wins!", 1750, 80)
+  end
   
 end
 
@@ -146,16 +161,14 @@ function gameSetup()
     pileTable[5]:addCard(cardTable[cardNum])
     cardNum = cardNum + 1
     faceUp = false
-    cardString = deckPlayer:removeTopCard()
+    cardString = deckAI:removeTopCard()
     table.insert(cardTable, stringFunction[cardString](self, 2))
     pileTable[10]:addCard(cardTable[cardNum])
     cardNum = cardNum + 1
   end
   pileTable[5]:refreshPile()
   pileTable[10]:refreshPile()
---  for i, _ in ipairs(cardTable) do
---    print(cardTable[i])
---  end
+  AITurn()
 end
 
 function resetGame()
@@ -216,20 +229,114 @@ function loadGame(seed, seedAI)
 end
 function submitMove()
   comparePiles(pileTable[1], pileTable[6], 1)
+  wait(1)
   comparePiles(pileTable[2], pileTable[7], 2)
+  wait(1)
   comparePiles(pileTable[3], pileTable[8], 3)
+  wait(1)
   turn = turn + 1
+  playerMana = turn - (pileTable[1].mana + pileTable[2].mana + pileTable[3].mana) + playerBonusMana
+  AIMana = turn - (pileTable[6].mana + pileTable[7].mana + pileTable[8].mana) + AIBonusMana
+  AITurn()
 end
 
 function comparePiles(pilePlayer, pileAI, location)
-  if pilePlayer.power >= pileAI.power then
+  if #pilePlayer.cards == 0 and #pileAI.cards == 0 then
+    return
+  end
+  if pilePlayer.power > pileAI.power then
     for _, card in ipairs(pilePlayer.cards) do
       if not card.revealed then
         card:onReveal(location)
       end
     end
+    wait(1)
+    for _, card in ipairs(pileAI.cards) do
+      if not card.revealed then
+        card:onReveal(location)
+      end
+    end
     playerPoints = playerPoints + (pilePlayer.power - pileAI.power)
-  else
+  elseif pilePlayer.power < pileAI.power then
+    for _, card in ipairs(pileAI.cards) do
+      if not card.revealed then
+        card:onReveal(location)
+      end
+    end
+    wait(1)
+    for _, card in ipairs(pilePlayer.cards) do
+      if not card.revealed then
+        card:onReveal(location)
+      end
+    end
     AIPoints = AIPoints + (pileAI.power - pilePlayer.power)
+  else
+    local pickRandom = math.random(2)
+    local firstPile = nil
+    local secondPile = nil
+    if pickRandom == 1 then
+      firstPile = pilePlayer
+      secondPile = pileAI
+    else
+      firstPile = pileAI
+      secondPile = pilePlayer
+    end
+    for _, card in ipairs(firstPile.cards) do
+      if not card.revealed then
+        card:onReveal(location)
+      end
+    end
+    wait(1)
+    for _, card in ipairs(secondPile.cards) do
+      if not card.revealed then
+        card:onReveal(location)
+      end
+    end
   end
 end
+
+-- Credit to MartinMcManus on stack overflow
+function wait(seconds)
+  local time = os.time()
+  local newtime = time + seconds
+  while (time < newtime)
+  do
+    time=os.time()
+  end
+end
+
+function AITurn()
+  if #pileTable[10].cards == 7 then
+    local discardCard = pileTable[10].cards[math.random(7)]
+    pileTable[10]:removeCard(discardCard)
+    pileTable[9]:addCard(discardCard)
+  end
+  drawPileAI:drawCards()
+  local playCard = nil
+  for _, card in ipairs(pileTable[10].cards) do
+    if card.cost <= AIMana then
+      playCard = card
+      break
+    end
+  end
+  if playCard == nil then
+    return
+  end
+  local randomLocationIndex = math.random(6, 8)
+  pileTable[10]:removeCard(playCard)
+  pileTable[randomLocationIndex]:addCard(playCard)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+

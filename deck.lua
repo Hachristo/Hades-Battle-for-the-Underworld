@@ -82,7 +82,7 @@ function DeckClass:fillDeck()
     local card = self.allCards[randomIndex] .. ".png"
     table.insert(self.cards, card)
     table.remove(self.allCards, randomIndex)
---      table.insert(self.cards, "Apollo.png")
+--    table.insert(self.cards, "Dionysus.png")
   end
 end
 

@@ -138,7 +138,7 @@ function WoodenCowPrototype:new(_player)
   return card
 end
 function WoodenCowPrototype:onReveal(cardLocation)
-  
+  self.revealed = true
 end
 -- Pegasus
 PegasusPrototype = CardClass:new(0, 0, "Pegasus.png", false, false, 0)
@@ -149,7 +149,7 @@ function PegasusPrototype:new(_player)
   return card
 end
 function PegasusPrototype:onReveal(cardLocation)
-  
+  self.revealed = true
 end
 -- Minotaur
 MinotaurPrototype = CardClass:new(0, 0, "Minotaur.png", false, false, 0)
@@ -160,7 +160,7 @@ function MinotaurPrototype:new(_player)
   return card
 end
 function MinotaurPrototype:onReveal(cardLocation)
-  
+  self.revealed = true
 end
 -- Titan
 TitanPrototype = CardClass:new(0, 0, "Titan.png", false, false, 0)
@@ -171,7 +171,7 @@ function TitanPrototype:new(_player)
   return card
 end
 function TitanPrototype:onReveal(cardLocation)
-  
+  self.revealed = true
 end
 -- Zeus
 ZeusPrototype = CardClass:new(0, 0, "Zeus.png", false, false, 0)

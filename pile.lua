@@ -34,7 +34,6 @@ function PileClass:draw()
   love.graphics.rectangle("line", self.position.x, self.position.y, self.size.x, self.size.y, 6, 6)
   for _, card in ipairs(self.cards) do
     card:draw()
-  love.graphics.print(#self.cards, self.position.x, self.position.y - 15)
   end
 end
 
@@ -42,8 +41,13 @@ function PileClass:tableauUpdate()
   local pileMana = 0
   local pilePower = 0
   for i, iCard in ipairs(self.cards) do
-    iCard.side = true
-    iCard.draggable = true
+    if iCard.player == 2 and iCard.revealed == false then
+      iCard.side = false
+      iCard.draggable = false
+    else
+      iCard.side = true
+      iCard.draggable = true
+    end
     pileMana = pileMana + iCard.cost
     pilePower = pilePower + iCard.power
   end
