@@ -140,17 +140,18 @@ function gameSetup()
   for i = 1, 3 do
     local faceUp = true
     local cardString = deckPlayer:removeTopCard()
-    print(cardString)
-    table.insert(cardTable, stringFunction[cardString](self, 0, 0, cardString, faceUp, faceUp, PLAYER))
+    table.insert(cardTable, stringFunction[cardString](0, 0, cardString, faceUp, faceUp, PLAYER))
     pileTable[5]:addCard(cardTable[cardNum])
     cardNum = cardNum + 1
     faceUp = false
     cardString = deckPlayer:removeTopCard()
-    print(cardString)
-    table.insert(cardTable, stringFunction[cardString](self, 0, 0, cardString, faceUp, faceUp, AI))
+    table.insert(cardTable, stringFunction[cardString](0, 0, cardString, faceUp, faceUp, AI))
     pileTable[10]:addCard(cardTable[cardNum])
     cardNum = cardNum + 1
   end
+--  for i, _ in ipairs(cardTable) do
+--    print(cardTable[i])
+--  end
 end
 
 function resetGame()

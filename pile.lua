@@ -34,6 +34,7 @@ function PileClass:draw()
   love.graphics.rectangle("line", self.position.x, self.position.y, self.size.x, self.size.y, 6, 6)
   for _, card in ipairs(self.cards) do
     card:draw()
+  love.graphics.print(#self.cards, self.position.x, self.position.y - 15)
   end
 end
 
@@ -88,16 +89,11 @@ function PileClass:addCard(card)
   if self.type == 1 or self.type == 2 then
     spacing = 1
   end
-  if self.type == 0 then
-    if tonumber(card.number) == 13 then
-      self.complete = true
-      print("complete")
-    end
-  end
-  table.insert(self.cards, card)
+  table.insert(self.cards, #self.cards + 1, card)
   for i, iCard in ipairs(self.cards) do
     iCard.position.x = self.position.x + ((i-1) * 150 * spacing)
     iCard.position.y = self.position.y
+    print(iCard)
   end
 end
 

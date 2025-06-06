@@ -117,10 +117,15 @@ function CardClass:checkForMouseOver(grabber)
   
   self.state = isMouseOver and CARD_STATE.MOUSE_OVER or CARD_STATE.IDLE
 end
+
+function CardClass:onReveal()
+  stringFunction[self.name]()
+end
 -- Card Subclasses
 -- Wooden Cow
 WoodenCowPrototype = CardClass:new(0, 0, "Wooden Cow.png", false, false, 0)
 function WoodenCowPrototype:new()
+  WoodenCowPrototype = CardClass:new(0, 0, "Wooden Cow.png", false, false, 0)
   return WoodenCowPrototype
 end
 function WoodenCowPrototype:onReveal()
@@ -129,6 +134,7 @@ end
 -- Pegasus
 PegasusPrototype = CardClass:new(0, 0, "Pegasus.png", false, false, 0)
 function PegasusPrototype:new()
+  PegasusPrototype = CardClass:new(0, 0, "Pegasus.png", false, false, 0)
   return PegasusPrototype
 end
 function PegasusPrototype:onReveal()
@@ -137,6 +143,7 @@ end
 -- Minotaur
 MinotaurPrototype = CardClass:new(0, 0, "Minotaur.png", false, false, 0)
 function MinotaurPrototype:new()
+  MinotaurPrototype = CardClass:new(0, 0, "Minotaur.png", false, false, 0)
   return MinotaurPrototype
 end
 function MinotaurPrototype:onReveal()
@@ -145,6 +152,7 @@ end
 -- Titan
 TitanPrototype = CardClass:new(0, 0, "Titan.png", false, false, 0)
 function TitanPrototype:new()
+  TitanPrototype = CardClass:new(0, 0, "Titan.png", false, false, 0)
   return TitanPrototype
 end
 function TitanPrototype:onReveal()
@@ -153,6 +161,7 @@ end
 -- Zeus
 ZeusPrototype = CardClass:new(0, 0, "Zeus.png", false, false, 0)
 function ZeusPrototype:new()
+  ZeusPrototype = CardClass:new(0, 0, "Zeus.png", false, false, 0)
   return ZeusPrototype
 end
 function ZeusPrototype:onReveal()
@@ -167,6 +176,7 @@ end
 -- Ares
 AresPrototype = CardClass:new(0, 0, "Ares.png", false, false, 0)
 function AresPrototype:new()
+  AresPrototype = CardClass:new(0, 0, "Ares.png", false, false, 0)
   return AresPrototype
 end
 function AresPrototype:onReveal()
@@ -175,6 +185,7 @@ end
 -- Poseidon
 PoseidonPrototype = CardClass:new(0, 0, "Poseidon.png", false, false, 0)
 function PoseidonPrototype:new()
+  PoseidonPrototype = CardClass:new(0, 0, "Poseidon.png", false, false, 0)
   return PoseidonPrototype
 end
 function PoseidonPrototype:onReveal()
@@ -183,6 +194,7 @@ end
 -- Artemis
 ArtemisPrototype = CardClass:new(0, 0, "Artemis.png", false, false, 0)
 function ArtemisPrototype:new()
+  ArtemisPrototype = CardClass:new(0, 0, "Artemis.png", false, false, 0)
   return ArtemisPrototype
 end
 function ArtemisPrototype:onReveal()
@@ -191,6 +203,7 @@ end
 -- Demeter
 DemeterPrototype = CardClass:new(0, 0, "Demeter.png", false, false, 0)
 function DemeterPrototype:new()
+  DemeterPrototype = CardClass:new(0, 0, "Demeter.png", false, false, 0)
   return DemeterPrototype
 end
 function DemeterPrototype:onReveal()
@@ -199,6 +212,7 @@ end
 -- Hades
 HadesPrototype = CardClass:new(0, 0, "Hades.png", false, false, 0)
 function HadesPrototype:new()
+  HadesPrototype = CardClass:new(0, 0, "Hades.png", false, false, 0)
   return HadesPrototype
 end
 function HadesPrototype:onReveal()
@@ -207,6 +221,7 @@ end
 -- Dionysus
 DionysusPrototype = CardClass:new(0, 0, "Dionysus.png", false, false, 0)
 function DionysusPrototype:new()
+  DionysusPrototype = CardClass:new(0, 0, "Dionysus.png", false, false, 0)
   return DionysusPrototype
 end
 function DionysusPrototype:onReveal()
@@ -215,6 +230,7 @@ end
 -- Hermes
 HermesPrototype = CardClass:new(0, 0, "Hermes.png", false, false, 0)
 function HermesPrototype:new()
+  HermesPrototype = CardClass:new(0, 0, "Hermes.png", false, false, 0)
   return HermesPrototype
 end
 function HermesPrototype:onReveal()
@@ -223,6 +239,7 @@ end
 -- Aphrodite
 AphroditePrototype = CardClass:new(0, 0, "Aphrodite.png", false, false, 0)
 function AphroditePrototype:new()
+  AphroditePrototype = CardClass:new(0, 0, "Aphrodite.png", false, false, 0)
   return AphroditePrototype
 end
 function AphroditePrototype:onReveal()
@@ -231,6 +248,7 @@ end
 -- Apollo
 ApolloPrototype = CardClass:new(0, 0, "Apollo.png", false, false, 0)
 function ApolloPrototype:new()
+  ApolloPrototype = CardClass:new(0, 0, "Apollo.png", false, false, 0)
   return ApolloPrototype
 end
 function ApolloPrototype:onReveal()
